@@ -1,0 +1,79 @@
+#Create a Craps game
+import random
+# Set variables for score counting
+i = 0
+score = 0
+score1 = False
+
+# Set the score counting function
+def count_scores():
+    global score
+    if score1 is True:
+        score = score + 1
+        print("The total score is", score, "out of", i, "rounds")
+    elif score1 is False:
+        print("The total score is", score, "out of", i, "rounds")
+
+# Define the main game function
+def craps_game():
+    # Roll two dice
+    global score1
+
+    dice1 = random.randint(1, 6)
+    dice2 = random.randint(1, 6)
+    total = dice1 + dice2
+    print(f"You rolled {dice1} + {dice2} = {total}")
+
+    # Check if the player has won or lost on the first roll
+    if total == 7 or total == 11:
+
+        score1 = True
+        print("You win!")
+        count_scores()
+
+    elif total == 2 or total == 3 or total == 12:
+        score1 = False
+        print("You lose!")
+        count_scores()
+
+    else:
+        point = total
+        print(f"Point is {point}")
+
+        # Keep rolling until the player wins or loses
+        while True:
+            # Ask the player if they want to roll the dice in the next round
+            play = input('Please, press "Enter" key to roll the dice: ')
+            if play.lower() != "" \
+                               "":
+                print('Invalid input.')
+                continue
+
+            dice1 = random.randint(1, 6)
+            dice2 = random.randint(1, 6)
+            total = dice1 + dice2
+            print(f"You rolled {dice1} + {dice2} = {total}")
+            if total == point:
+                score1 = True
+                print("You win!")
+                count_scores()
+                break
+            elif total == 7:
+                score1 = False
+                print("You lose!")
+                count_scores()
+                break
+
+# Start the game loop
+while True:
+    # Ask the player if they want to play a round
+    play = input("Do you want to play Craps? (y/n): ")
+    if play.lower() == "n":
+        break
+    elif play.lower() == "y":
+        i = i + 1
+    elif play.lower() != "y":
+        print("Invalid input. Please enter 'y' or 'n'.")
+        continue
+    # Play a round of the game
+    craps_game()
